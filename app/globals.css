@@ -1,0 +1,242 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Noble Funded - Royal Emerald Dark Theme (always dark) */
+  --background: #001e28;
+  --foreground: #e8f5f2;
+  --card: #002b36;
+  --card-foreground: #e8f5f2;
+  --popover: #002b36;
+  --popover-foreground: #e8f5f2;
+  --primary: #a7ffeb;
+  --primary-foreground: #001e28;
+  --secondary: #14655b;
+  --secondary-foreground: #e8f5f2;
+  --muted: #0d3d35;
+  --muted-foreground: #7ab8ac;
+  --accent: #14655b;
+  --accent-foreground: #a7ffeb;
+  --destructive: #ff5c5c;
+  --destructive-foreground: #fff;
+  --border: rgba(167, 255, 235, 0.1);
+  --input: rgba(167, 255, 235, 0.08);
+  --ring: #14655b;
+  --chart-1: #a7ffeb;
+  --chart-2: #14655b;
+  --chart-3: #4dd9b8;
+  --chart-4: #ff5c5c;
+  --chart-5: #ffd166;
+  --radius: 0.75rem;
+  --sidebar: #002b36;
+  --sidebar-foreground: #e8f5f2;
+  --sidebar-primary: #a7ffeb;
+  --sidebar-primary-foreground: #001e28;
+  --sidebar-accent: rgba(167, 255, 235, 0.08);
+  --sidebar-accent-foreground: #a7ffeb;
+  --sidebar-border: rgba(167, 255, 235, 0.08);
+  --sidebar-ring: #14655b;
+
+  /* Custom Noble tokens */
+  --noble-dark: #001e28;
+  --noble-base: #002b36;
+  --noble-mid: #14655b;
+  --noble-mint: #a7ffeb;
+  --noble-glass: rgba(0, 43, 54, 0.7);
+  --noble-glass-border: rgba(167, 255, 235, 0.12);
+  --noble-profit: #4ade80;
+  --noble-loss: #f87171;
+  --noble-warning: #fbbf24;
+  --noble-naira: #ffd166;
+  --noble-dollar: #a7ffeb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --font-sans: var(--font-figtree), "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background: var(--noble-dark);
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--noble-dark);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--noble-mid);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--noble-mint);
+  }
+}
+
+/* Glass morphism utility */
+.glass {
+  background: var(--noble-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--noble-glass-border);
+}
+
+.glass-card {
+  background: rgba(0, 43, 54, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(167, 255, 235, 0.12);
+  border-radius: var(--radius);
+}
+
+.noble-glow {
+  box-shadow: 0 0 20px rgba(167, 255, 235, 0.08);
+}
+
+.noble-glow-strong {
+  box-shadow: 0 0 30px rgba(167, 255, 235, 0.15), 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(167, 255, 235, 0.1);
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #14655b, #a7ffeb);
+  transition: width 0.6s ease;
+}
+.progress-bar-danger {
+  background: linear-gradient(90deg, #b91c1c, #f87171);
+}
+.progress-bar-warning {
+  background: linear-gradient(90deg, #92400e, #fbbf24);
+}
+
+/* Sidebar active state */
+.nav-active {
+  background: rgba(167, 255, 235, 0.1);
+  color: var(--noble-mint);
+  border-right: 2px solid var(--noble-mint);
+}
+
+/* Stat card glow on hover */
+.stat-card:hover {
+  border-color: rgba(167, 255, 235, 0.25);
+  box-shadow: 0 8px 32px rgba(167, 255, 235, 0.06);
+  transition: all 0.2s ease;
+}
+
+/* Badge styles */
+.badge-naira {
+  background: rgba(255, 209, 102, 0.15);
+  color: #ffd166;
+  border: 1px solid rgba(255, 209, 102, 0.25);
+}
+.badge-dollar {
+  background: rgba(167, 255, 235, 0.15);
+  color: #a7ffeb;
+  border: 1px solid rgba(167, 255, 235, 0.25);
+}
+.badge-active {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.25);
+}
+.badge-challenge {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.badge-failed {
+  background: rgba(248, 113, 113, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.25);
+}
+.badge-passed {
+  background: rgba(167, 255, 235, 0.15);
+  color: #a7ffeb;
+  border: 1px solid rgba(167, 255, 235, 0.25);
+}
+
+.input-field {
+  width: 100%;
+  background: rgba(167, 255, 235, 0.05);
+  border: 1px solid rgba(167, 255, 235, 0.12);
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  color: var(--noble-mint);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-field::placeholder {
+  color: var(--noble-mid);
+}
+.input-field:focus {
+  border-color: rgba(167, 255, 235, 0.4);
+  box-shadow: 0 0 0 3px rgba(167, 255, 235, 0.05);
+}
+
+/* Page fade in animation */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.page-fade-in {
+  animation: fadeSlideIn 0.35s ease forwards;
+}
