@@ -22,6 +22,8 @@ import {
   ShoppingCart,
   ChevronRight,
   User,
+  Award,
+  BookOpen,
 } from "lucide-react"
 import { mockUser } from "@/lib/data"
 import { cn } from "@/lib/utils"
@@ -33,6 +35,8 @@ const navItems = [
   { href: "/dashboard/payouts", icon: DollarSign, label: "Payouts" },
   { href: "/dashboard/affiliate", icon: Users, label: "Affiliate" },
   { href: "/dashboard/leaderboard", icon: Trophy, label: "Leaderboard" },
+  { href: "/dashboard/certificates", icon: Award, label: "Certificates" },
+  { href: "/dashboard/rules", icon: BookOpen, label: "Rules" },
 ]
 
 const bottomItems = [
@@ -67,7 +71,13 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
           "lg:translate-x-0",
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
-        style={{ background: "#002b36" }}
+        style={{
+          background: "linear-gradient(180deg, rgba(13,148,136,0.12) 0%, rgba(6,15,14,0.75) 30%, rgba(7,18,17,0.82) 100%)",
+          backdropFilter: "blur(40px) saturate(200%)",
+          WebkitBackdropFilter: "blur(40px) saturate(200%)",
+          borderRight: "1px solid rgba(94,234,212,0.14)",
+          boxShadow: "1px 0 0 rgba(255,255,255,0.04) inset, 2px 0 32px rgba(0,0,0,0.6), 0 0 24px rgba(13,148,136,0.08) inset",
+        }}
       >
         {/* Logo */}
         <div className="flex items-center justify-between px-5 py-5 border-b border-[rgba(167,255,235,0.08)]">
@@ -92,7 +102,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
         {/* User Profile Mini */}
         <div className="px-4 py-4 border-b border-[rgba(167,255,235,0.08)]">
           <div className="flex items-center gap-3 glass-card px-3 py-2.5">
-            <div className="w-9 h-9 rounded-full bg-[#14655b] flex items-center justify-center text-[#a7ffeb] font-bold text-sm shrink-0">
+            <div className="w-9 h-9 rounded-full bg-[#0d9488] flex items-center justify-center text-[#060f0e] font-bold text-sm shrink-0">
               {mockUser.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
             </div>
             <div className="flex-1 min-w-0">
@@ -119,13 +129,13 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group",
                   active
-                    ? "bg-[rgba(167,255,235,0.1)] text-[#a7ffeb] border border-[rgba(167,255,235,0.15)]"
-                    : "text-muted-foreground hover:text-foreground hover:bg-[rgba(167,255,235,0.06)]"
+                    ? "bg-[rgba(20,184,166,0.12)] text-[#5eead4] border border-[rgba(20,184,166,0.2)]"
+                    : "text-muted-foreground hover:text-foreground hover:bg-[rgba(20,184,166,0.07)]"
                 )}
               >
-                <item.icon className={cn("w-[18px] h-[18px] shrink-0", active ? "text-[#a7ffeb]" : "text-muted-foreground group-hover:text-foreground")} size={18} />
+                <item.icon className={cn("w-[18px] h-[18px] shrink-0", active ? "text-[#5eead4]" : "text-muted-foreground group-hover:text-foreground")} size={18} />
                 <span>{item.label}</span>
-                {active && <ChevronRight className="w-3.5 h-3.5 ml-auto text-[#a7ffeb]/60" />}
+                {active && <ChevronRight className="w-3.5 h-3.5 ml-auto text-[#5eead4]/60" />}
               </Link>
             )
           })}
@@ -143,13 +153,13 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group",
                   item.label === "Buy Challenge"
-                    ? "bg-[rgba(167,255,235,0.08)] text-[#a7ffeb] border border-[rgba(167,255,235,0.15)] hover:bg-[rgba(167,255,235,0.14)]"
+                    ? "bg-[rgba(20,184,166,0.1)] text-[#5eead4] border border-[rgba(20,184,166,0.2)] hover:bg-[rgba(20,184,166,0.16)]"
                     : active
-                    ? "bg-[rgba(167,255,235,0.1)] text-[#a7ffeb] border border-[rgba(167,255,235,0.15)]"
-                    : "text-muted-foreground hover:text-foreground hover:bg-[rgba(167,255,235,0.06)]"
+                    ? "bg-[rgba(20,184,166,0.12)] text-[#5eead4] border border-[rgba(20,184,166,0.2)]"
+                    : "text-muted-foreground hover:text-foreground hover:bg-[rgba(20,184,166,0.07)]"
                 )}
               >
-                <item.icon className={cn("w-[18px] h-[18px] shrink-0", item.label === "Buy Challenge" ? "text-[#a7ffeb]" : "text-muted-foreground group-hover:text-foreground")} size={18} />
+                <item.icon className={cn("w-[18px] h-[18px] shrink-0", item.label === "Buy Challenge" ? "text-[#5eead4]" : "text-muted-foreground group-hover:text-foreground")} size={18} />
                 <span>{item.label}</span>
                 {(item.external || active) && <ChevronRight className="w-3.5 h-3.5 ml-auto opacity-50" />}
               </Link>
@@ -179,7 +189,7 @@ export function Topbar({ onMenuOpen, title, subtitle }: TopbarProps) {
   const [notifOpen, setNotifOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between px-4 lg:px-6 py-4 border-b border-[rgba(167,255,235,0.08)]" style={{ background: "rgba(0,30,40,0.95)", backdropFilter: "blur(20px)" }}>
+    <header className="sticky top-0 z-30 flex items-center justify-between px-4 lg:px-6 py-4 border-b border-[rgba(94,234,212,0.1)]" style={{ background: "linear-gradient(90deg, rgba(13,148,136,0.1) 0%, rgba(6,15,14,0.7) 50%, rgba(7,18,17,0.75) 100%)", backdropFilter: "blur(36px) saturate(180%)", WebkitBackdropFilter: "blur(36px) saturate(180%)", boxShadow: "0 1px 0 rgba(255,255,255,0.04) inset, 0 1px 24px rgba(0,0,0,0.4)" }}>
       {/* Left */}
       <div className="flex items-center gap-3">
         <button
@@ -214,7 +224,7 @@ export function Topbar({ onMenuOpen, title, subtitle }: TopbarProps) {
             className="relative p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-[rgba(167,255,235,0.06)] transition-colors"
           >
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#a7ffeb]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#5eead4]" />
           </button>
           {notifOpen && (
             <div className="absolute right-0 top-12 w-80 glass-card noble-glow-strong z-50 overflow-hidden">
@@ -243,7 +253,7 @@ export function Topbar({ onMenuOpen, title, subtitle }: TopbarProps) {
 
         {/* Avatar */}
         <Link href="/dashboard/settings" className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-[rgba(167,255,235,0.06)] transition-colors">
-          <div className="w-8 h-8 rounded-full bg-[#14655b] flex items-center justify-center text-[#a7ffeb] font-bold text-xs">
+          <div className="w-8 h-8 rounded-full bg-[#0d9488] flex items-center justify-center text-[#060f0e] font-bold text-xs">
             {mockUser.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
           </div>
           <span className="hidden md:block text-sm font-medium">{mockUser.name.split(" ")[0]}</span>

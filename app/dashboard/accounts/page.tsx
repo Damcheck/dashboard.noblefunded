@@ -47,7 +47,7 @@ export default function AccountsPage() {
                   className={cn(
                     "px-3 py-1.5 text-xs font-medium rounded-md transition-all",
                     filter === f
-                      ? "bg-[#a7ffeb] text-[#001e28]"
+                      ? "bg-[#5eead4] text-[#071210]"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
@@ -77,7 +77,8 @@ export default function AccountsPage() {
             href="https://noble-frontend-lilac.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-[#001e28] bg-[#a7ffeb] hover:bg-[#7bf5d5] transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-[#071210] bg-[#5eead4] hover:bg-[#2dd4bf] transition-all shadow-lg"
+            style={{ boxShadow: "0 0 20px rgba(94,234,212,0.25)" }}
           >
             <ShoppingCart size={15} />
             Buy New Challenge
@@ -114,7 +115,7 @@ export default function AccountsPage() {
               const isNaira = account.currency === "NGN"
 
               return (
-                <div key={account.id} className="glass-card p-5 hover:border-[rgba(167,255,235,0.2)] transition-all duration-200">
+                <div key={account.id} className="glass-card p-5 hover:border-[rgba(94,234,212,0.3)] transition-all duration-200 hover:-translate-y-0.5">
                   {/* Header */}
                   <div className="flex items-start justify-between mb-4">
                     <div>
@@ -137,8 +138,22 @@ export default function AccountsPage() {
                     </div>
                   </div>
 
-                  {/* MT5 Credentials */}
-                  <div className="grid grid-cols-2 gap-2 mb-4 bg-[rgba(167,255,235,0.03)] rounded-lg p-3 border border-[rgba(167,255,235,0.06)]">
+                  {/* Rule summary pill */}
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(94,234,212,0.12)", color: "rgba(94,234,212,0.8)" }}>
+                      {isNaira ? "No daily DD" : "3% daily DD"}
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(94,234,212,0.12)", color: "rgba(94,234,212,0.8)" }}>
+                      {isNaira ? "20% max DD" : "10% max DD"}
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full font-medium"
+                      style={{ background: "rgba(13,148,136,0.08)", border: "1px solid rgba(94,234,212,0.12)", color: "rgba(94,234,212,0.8)" }}>
+                      {isNaira ? "80/20 → 60/40" : "80/20 → 90/10"}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 mb-4 rounded-lg p-3" style={{ background: "rgba(13,148,136,0.07)", border: "1px solid rgba(94,234,212,0.1)" }}>
                     <div>
                       <p className="text-[10px] text-muted-foreground uppercase tracking-wider">Login</p>
                       <p className="text-xs font-mono font-semibold text-foreground">{account.login}</p>
@@ -160,26 +175,59 @@ export default function AccountsPage() {
                   {/* Progress */}
                   {account.status !== "failed" && (
                     <div className="space-y-2.5 mb-4">
+                      {/* Profit progress — show current vs target */}
                       <div>
                         <div className="flex justify-between text-xs mb-1">
-                          <span className="text-muted-foreground">Profit Target ({account.profitTarget}%)</span>
+                          <span className="text-muted-foreground">
+                            Profit Target ({account.profitTarget}%
+                            {/* For dollar phase 2, annotate it's 5% */}
+                            {account.type === "dollar" && account.phase === 2 ? " — Phase 2" : ""}
+                            )
+                          </span>
                           <span className={cn("font-medium", account.currentProfit >= account.profitTarget ? "text-[#4ade80]" : "text-foreground")}>
                             {account.currentProfit.toFixed(2)}%
                           </span>
                         </div>
                         <div className="progress-bar">
-                          <div className="progress-bar-fill" style={{ width: `${Math.max(0, progressPct)}%` }} />
+                          <div className="progress-bar-fill" style={{ width: `${Math.max(0, Math.min(100, (account.currentProfit / account.profitTarget) * 100))}%` }} />
                         </div>
                       </div>
+                      {/* Drawdown — only Dollar has daily drawdown */}
+                      {account.type === "dollar" && (
+                        <div>
+                          <div className="flex justify-between text-xs mb-1">
+                            <span className="text-muted-foreground">Daily Drawdown ({account.maxDailyDrawdown}%)</span>
+                            <span className={cn("font-medium", account.currentDailyDrawdown > account.maxDailyDrawdown * 0.7 ? "text-[#f87171]" : "text-foreground")}>
+                              {account.currentDailyDrawdown.toFixed(2)}%
+                            </span>
+                          </div>
+                          <div className="progress-bar">
+                            <div
+                              className={cn("progress-bar-fill", (account.currentDailyDrawdown / account.maxDailyDrawdown) > 0.7 ? "progress-bar-danger" : (account.currentDailyDrawdown / account.maxDailyDrawdown) > 0.4 ? "progress-bar-warning" : "")}
+                              style={{ width: `${Math.max(0, Math.min(100, (account.currentDailyDrawdown / account.maxDailyDrawdown) * 100))}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {account.type === "naira" && (
+                        <p className="text-[10px] text-[#4ade80] flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80] inline-block" />
+                          No daily drawdown on Naira accounts
+                        </p>
+                      )}
+                      {/* Overall drawdown */}
                       <div>
                         <div className="flex justify-between text-xs mb-1">
                           <span className="text-muted-foreground">Max Drawdown ({account.maxOverallDrawdown}%)</span>
-                          <span className={cn("font-medium", drawdownPct > 70 ? "text-[#f87171]" : drawdownPct > 40 ? "text-[#fbbf24]" : "text-foreground")}>
+                          <span className={cn("font-medium", (account.currentOverallDrawdown / account.maxOverallDrawdown) > 0.7 ? "text-[#f87171]" : (account.currentOverallDrawdown / account.maxOverallDrawdown) > 0.4 ? "text-[#fbbf24]" : "text-foreground")}>
                             {account.currentOverallDrawdown.toFixed(2)}%
                           </span>
                         </div>
                         <div className="progress-bar">
-                          <div className={cn("progress-bar-fill", drawdownPct > 70 ? "progress-bar-danger" : drawdownPct > 40 ? "progress-bar-warning" : "")} style={{ width: `${drawdownPct}%` }} />
+                          <div
+                            className={cn("progress-bar-fill", (account.currentOverallDrawdown / account.maxOverallDrawdown) > 0.7 ? "progress-bar-danger" : (account.currentOverallDrawdown / account.maxOverallDrawdown) > 0.4 ? "progress-bar-warning" : "")}
+                            style={{ width: `${Math.max(0, Math.min(100, (account.currentOverallDrawdown / account.maxOverallDrawdown) * 100))}%` }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -196,14 +244,14 @@ export default function AccountsPage() {
                   <div className="flex gap-2">
                     <Link
                       href={`/dashboard/accounts/${account.id}`}
-                      className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[#a7ffeb] bg-[rgba(167,255,235,0.08)] hover:bg-[rgba(167,255,235,0.14)] py-2 rounded-lg transition-colors"
+                      className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[#5eead4] bg-[rgba(20,184,166,0.1)] hover:bg-[rgba(20,184,166,0.18)] py-2 rounded-lg transition-colors border border-[rgba(94,234,212,0.12)]"
                     >
                       Details <ChevronRight size={13} />
                     </Link>
                     {account.status === "funded" && (
                       <Link
                         href="/dashboard/payouts"
-                        className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[#001e28] bg-[#a7ffeb] hover:bg-[#7bf5d5] py-2 rounded-lg transition-colors"
+                        className="flex-1 flex items-center justify-center gap-1.5 text-xs font-medium text-[#071210] bg-[#5eead4] hover:bg-[#2dd4bf] py-2 rounded-lg transition-colors"
                       >
                         Payout
                       </Link>

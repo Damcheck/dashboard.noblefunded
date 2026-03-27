@@ -85,7 +85,7 @@ export default function StatisticsPage() {
           <div className="flex items-center gap-1 p-1 glass-card rounded-lg">
             <button
               onClick={() => setSelectedAccount("all")}
-              className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all", selectedAccount === "all" ? "bg-[#a7ffeb] text-[#001e28]" : "text-muted-foreground hover:text-foreground")}
+              className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all", selectedAccount === "all" ? "bg-[#5eead4] text-[#071210]" : "text-muted-foreground hover:text-foreground")}
             >
               All Accounts
             </button>
@@ -93,7 +93,7 @@ export default function StatisticsPage() {
               <button
                 key={a.id}
                 onClick={() => setSelectedAccount(a.id)}
-                className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap", selectedAccount === a.id ? "bg-[rgba(167,255,235,0.15)] text-[#a7ffeb]" : "text-muted-foreground hover:text-foreground")}
+                className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap", selectedAccount === a.id ? "bg-[rgba(20,184,166,0.18)] text-[#5eead4] border border-[rgba(94,234,212,0.2)]" : "text-muted-foreground hover:text-foreground")}
               >
                 {a.accountNumber.split("-").slice(0, 3).join("-")}
               </button>
@@ -104,7 +104,7 @@ export default function StatisticsPage() {
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
-                className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all", period === p ? "bg-[rgba(167,255,235,0.15)] text-[#a7ffeb]" : "text-muted-foreground hover:text-foreground")}
+                className={cn("px-3 py-1.5 text-xs font-medium rounded-md transition-all", period === p ? "bg-[rgba(20,184,166,0.18)] text-[#5eead4] border border-[rgba(94,234,212,0.2)]" : "text-muted-foreground hover:text-foreground")}
               >
                 {p}
               </button>
@@ -154,7 +154,7 @@ export default function StatisticsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(167,255,235,0.06)" />
                 <XAxis dataKey="date" tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} interval={period === "7d" ? 1 : 6} />
                 <YAxis tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} tickFormatter={(v) => `₦${(v/1000).toFixed(0)}k`} />
-                <Tooltip contentStyle={{ background: "#002b36", border: "1px solid rgba(167,255,235,0.15)", borderRadius: "8px", fontSize: "12px" }} formatter={(v: number) => [`₦${v.toLocaleString()}`, "Balance"]} />
+                <Tooltip contentStyle={{ background: "rgba(7,18,17,0.9)", border: "1px solid rgba(94,234,212,0.18)", borderRadius: "8px", fontSize: "12px", backdropFilter: "blur(16px)" }} formatter={(v: number) => [`₦${v.toLocaleString()}`, "Balance"]} />
                 <Area type="monotone" dataKey="balance" stroke="#a7ffeb" strokeWidth={2.5} fill="url(#statsGrad)" dot={false} activeDot={{ r: 4, fill: "#a7ffeb" }} />
               </AreaChart>
             </ResponsiveContainer>
@@ -176,7 +176,7 @@ export default function StatisticsPage() {
                   <Cell fill="#4ade80" />
                   <Cell fill="#f87171" />
                 </Pie>
-                <Tooltip contentStyle={{ background: "#002b36", border: "1px solid rgba(167,255,235,0.15)", borderRadius: "8px", fontSize: "11px" }} />
+                <Tooltip contentStyle={{ background: "rgba(7,18,17,0.9)", border: "1px solid rgba(94,234,212,0.18)", borderRadius: "8px", fontSize: "11px", backdropFilter: "blur(16px)" }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="flex justify-center gap-6 mt-2">
@@ -203,10 +203,10 @@ export default function StatisticsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(167,255,235,0.06)" />
                 <XAxis dataKey="month" tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}%`} />
-                <Tooltip contentStyle={{ background: "#002b36", border: "1px solid rgba(167,255,235,0.15)", borderRadius: "8px", fontSize: "12px" }} formatter={(v: number) => [`${v}%`, "P&L"]} />
+                <Tooltip contentStyle={{ background: "rgba(7,18,17,0.9)", border: "1px solid rgba(94,234,212,0.18)", borderRadius: "8px", fontSize: "12px", backdropFilter: "blur(16px)" }} formatter={(v: number) => [`${v}%`, "P&L"]} />
                 <Bar dataKey="profit" radius={[4, 4, 0, 0]}>
                   {monthlyProfitData.map((entry, i) => (
-                    <Cell key={i} fill={entry.profit >= 0 ? "#14655b" : "#b91c1c"} />
+                    <Cell key={i} fill={entry.profit >= 0 ? "#0d9488" : "#b91c1c"} />
                   ))}
                 </Bar>
               </BarChart>
@@ -222,10 +222,10 @@ export default function StatisticsPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(167,255,235,0.06)" horizontal={false} />
                 <XAxis type="number" tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} />
                 <YAxis type="category" dataKey="symbol" tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} width={55} />
-                <Tooltip contentStyle={{ background: "#002b36", border: "1px solid rgba(167,255,235,0.15)", borderRadius: "8px", fontSize: "12px" }} />
+                <Tooltip contentStyle={{ background: "rgba(7,18,17,0.9)", border: "1px solid rgba(94,234,212,0.18)", borderRadius: "8px", fontSize: "12px", backdropFilter: "blur(16px)" }} />
                 <Bar dataKey="pnl" radius={[0, 4, 4, 0]}>
                   {symbolStats.map((s, i) => (
-                    <Cell key={i} fill={s.pnl >= 0 ? "#14655b" : "#b91c1c"} />
+                    <Cell key={i} fill={s.pnl >= 0 ? "#0d9488" : "#b91c1c"} />
                   ))}
                 </Bar>
               </BarChart>
@@ -242,7 +242,7 @@ export default function StatisticsPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(167,255,235,0.06)" />
               <XAxis dataKey="day" tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} />
               <YAxis tick={{ fontSize: 10, fill: "#7ab8ac" }} tickLine={false} axisLine={false} />
-              <Tooltip contentStyle={{ background: "#002b36", border: "1px solid rgba(167,255,235,0.15)", borderRadius: "8px", fontSize: "12px" }} formatter={(v: number) => [`₦${v.toFixed(0)}`, "Avg P&L"]} />
+              <Tooltip contentStyle={{ background: "rgba(7,18,17,0.9)", border: "1px solid rgba(94,234,212,0.18)", borderRadius: "8px", fontSize: "12px", backdropFilter: "blur(16px)" }} formatter={(v: number) => [`₦${v.toFixed(0)}`, "Avg P&L"]} />
               <Bar dataKey="avg" radius={[4, 4, 0, 0]}>
                 {dayStats.map((d, i) => (
                   <Cell key={i} fill={d.avg >= 0 ? "#a7ffeb" : "#f87171"} opacity={0.8} />

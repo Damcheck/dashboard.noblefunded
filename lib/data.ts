@@ -143,20 +143,47 @@ const generateTrades = (currency: Currency, count: number): Trade[] => {
   return trades
 }
 
+// --- CHALLENGE PRICING ---
+
+export interface ChallengePricing {
+  accountSize: number
+  challengeFee: number
+  currency: Currency
+  label: string
+}
+
+export const nairaChallengePricing: ChallengePricing[] = [
+  { accountSize: 200000, challengeFee: 10000, currency: "NGN", label: "₦200,000" },
+  { accountSize: 400000, challengeFee: 19000, currency: "NGN", label: "₦400,000" },
+  { accountSize: 600000, challengeFee: 29000, currency: "NGN", label: "₦600,000" },
+  { accountSize: 800000, challengeFee: 39000, currency: "NGN", label: "₦800,000" },
+  { accountSize: 1000000, challengeFee: 54000, currency: "NGN", label: "₦1,000,000" },
+  { accountSize: 3000000, challengeFee: 190000, currency: "NGN", label: "₦3,000,000" },
+]
+
+export const dollarChallengePricing: ChallengePricing[] = [
+  { accountSize: 5000, challengeFee: 29.99, currency: "USD", label: "$5,000" },
+  { accountSize: 10000, challengeFee: 59.99, currency: "USD", label: "$10,000" },
+  { accountSize: 25000, challengeFee: 134.99, currency: "USD", label: "$25,000" },
+  { accountSize: 50000, challengeFee: 219.99, currency: "USD", label: "$50,000" },
+  { accountSize: 100000, challengeFee: 379.99, currency: "USD", label: "$100,000" },
+  { accountSize: 200000, challengeFee: 749.99, currency: "USD", label: "$200,000" },
+]
+
 export const mockAccounts: TradingAccount[] = [
   {
     id: "acc_001",
-    accountNumber: "NF-NG-100K",
+    accountNumber: "NF-NG-800K",
     type: "naira",
     currency: "NGN",
     status: "funded",
-    balance: 107500,
-    startingBalance: 100000,
+    balance: 860000,
+    startingBalance: 800000,
     profitTarget: 10,
-    maxDailyDrawdown: 5,
-    maxOverallDrawdown: 10,
+    maxDailyDrawdown: 0,
+    maxOverallDrawdown: 20,
     currentProfit: 7.5,
-    currentDailyDrawdown: 1.2,
+    currentDailyDrawdown: 0,
     currentOverallDrawdown: 2.1,
     phase: null,
     leverage: "1:100",
@@ -170,17 +197,17 @@ export const mockAccounts: TradingAccount[] = [
   },
   {
     id: "acc_002",
-    accountNumber: "NF-NG-50K-P1",
+    accountNumber: "NF-NG-400K-P1",
     type: "naira",
     currency: "NGN",
     status: "challenge_phase1",
-    balance: 52400,
-    startingBalance: 50000,
+    balance: 419200,
+    startingBalance: 400000,
     profitTarget: 10,
-    maxDailyDrawdown: 5,
-    maxOverallDrawdown: 10,
+    maxDailyDrawdown: 0,
+    maxOverallDrawdown: 20,
     currentProfit: 4.8,
-    currentDailyDrawdown: 0.8,
+    currentDailyDrawdown: 0,
     currentOverallDrawdown: 1.5,
     phase: 1,
     leverage: "1:100",
@@ -200,8 +227,8 @@ export const mockAccounts: TradingAccount[] = [
     status: "challenge_phase2",
     balance: 10620,
     startingBalance: 10000,
-    profitTarget: 10,
-    maxDailyDrawdown: 5,
+    profitTarget: 5,
+    maxDailyDrawdown: 3,
     maxOverallDrawdown: 10,
     currentProfit: 6.2,
     currentDailyDrawdown: 0.5,
@@ -222,14 +249,14 @@ export const mockAccounts: TradingAccount[] = [
     type: "dollar",
     currency: "USD",
     status: "failed",
-    balance: 4450,
+    balance: 4500,
     startingBalance: 5000,
     profitTarget: 10,
-    maxDailyDrawdown: 5,
+    maxDailyDrawdown: 3,
     maxOverallDrawdown: 10,
-    currentProfit: -11,
-    currentDailyDrawdown: 5.2,
-    currentOverallDrawdown: 11,
+    currentProfit: -10,
+    currentDailyDrawdown: 3.1,
+    currentOverallDrawdown: 10,
     phase: 1,
     leverage: "1:100",
     platform: "MT5",
@@ -282,15 +309,23 @@ export const mockAffiliate: AffiliateData = {
   referralLink: "https://noblefunded.com/ref/ADE123",
   totalReferrals: 12,
   pendingReferrals: 3,
-  totalEarnings: 45000,
+  totalEarnings: 47800,
   currency: "NGN",
   referrals: [
-    { id: "r1", name: "Chinedu Okafor", email: "chi***@gmail.com", joinedAt: "2025-01-12", status: "active", commission: 7500, currency: "NGN" },
-    { id: "r2", name: "Amina Bello", email: "ami***@yahoo.com", joinedAt: "2025-01-28", status: "active", commission: 12500, currency: "NGN" },
-    { id: "r3", name: "Tunde Adekunle", email: "tun***@gmail.com", joinedAt: "2025-02-03", status: "converted", commission: 5000, currency: "NGN" },
-    { id: "r4", name: "Ngozi Eze", email: "ngo***@gmail.com", joinedAt: "2025-02-20", status: "active", commission: 7500, currency: "NGN" },
-    { id: "r5", name: "Emeka Nwankwo", email: "eme***@gmail.com", joinedAt: "2025-03-05", status: "pending", commission: 0, currency: "NGN" },
-    { id: "r6", name: "Blessing Obi", email: "ble***@yahoo.com", joinedAt: "2025-03-10", status: "pending", commission: 0, currency: "NGN" },
+    // 10% of ₦39,000 = ₦3,900
+    { id: "r1", name: "Chinedu Okafor", email: "chi***@gmail.com", joinedAt: "2025-01-12", status: "active", commission: 3900, currency: "NGN" },
+    // 10% of ₦54,000 = ₦5,400
+    { id: "r2", name: "Amina Bello", email: "ami***@yahoo.com", joinedAt: "2025-01-28", status: "active", commission: 5400, currency: "NGN" },
+    // 10% of ₦29,000 = ₦2,900
+    { id: "r3", name: "Tunde Adekunle", email: "tun***@gmail.com", joinedAt: "2025-02-03", status: "converted", commission: 2900, currency: "NGN" },
+    // 10% of ₦19,000 = ₦1,900
+    { id: "r4", name: "Ngozi Eze", email: "ngo***@gmail.com", joinedAt: "2025-02-20", status: "active", commission: 1900, currency: "NGN" },
+    // 10% of $59.99 ≈ $6.00
+    { id: "r5", name: "Biodun Fasanya", email: "bio***@gmail.com", joinedAt: "2025-02-25", status: "active", commission: 6, currency: "USD" },
+    // 10% of $134.99 ≈ $13.50
+    { id: "r6", name: "Kelechi Onyeka", email: "kel***@gmail.com", joinedAt: "2025-03-01", status: "converted", commission: 13.5, currency: "USD" },
+    { id: "r7", name: "Emeka Nwankwo", email: "eme***@gmail.com", joinedAt: "2025-03-05", status: "pending", commission: 0, currency: "NGN" },
+    { id: "r8", name: "Blessing Obi", email: "ble***@yahoo.com", joinedAt: "2025-03-10", status: "pending", commission: 0, currency: "NGN" },
   ],
 }
 

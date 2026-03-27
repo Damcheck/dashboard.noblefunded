@@ -77,8 +77,8 @@ export default function SettingsPage() {
                   className={cn(
                     "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all text-left",
                     activeTab === tab.id
-                      ? "bg-[rgba(167,255,235,0.1)] text-[#a7ffeb] border border-[rgba(167,255,235,0.15)]"
-                      : "text-muted-foreground hover:text-foreground hover:bg-[rgba(167,255,235,0.05)]"
+                      ? "bg-[rgba(20,184,166,0.12)] text-[#5eead4] border border-[rgba(94,234,212,0.2)]"
+                      : "text-muted-foreground hover:text-foreground hover:bg-[rgba(20,184,166,0.06)]"
                   )}
                 >
                   <tab.icon size={16} className="shrink-0" />
@@ -101,13 +101,13 @@ export default function SettingsPage() {
 
                 {/* Avatar */}
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-[#14655b] flex items-center justify-center text-[#a7ffeb] font-black text-xl shrink-0">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-black text-xl shrink-0" style={{ background: "rgba(13,148,136,0.25)", color: "#5eead4", border: "2px solid rgba(94,234,212,0.2)" }}>
                     {mockUser.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">{mockUser.name}</p>
                     <p className="text-xs text-muted-foreground mb-2">Member since {new Date(mockUser.joinedAt).toLocaleDateString("en-NG", { month: "long", year: "numeric" })}</p>
-                    <button className="flex items-center gap-1.5 text-xs text-[#a7ffeb] bg-[rgba(167,255,235,0.08)] hover:bg-[rgba(167,255,235,0.14)] px-3 py-1.5 rounded-lg transition-colors border border-[rgba(167,255,235,0.12)]">
+                    <button className="flex items-center gap-1.5 text-xs text-[#5eead4] px-3 py-1.5 rounded-lg transition-colors" style={{ background: "rgba(13,148,136,0.1)", border: "1px solid rgba(94,234,212,0.15)" }}>
                       <Upload size={12} />
                       Upload Photo
                     </button>
