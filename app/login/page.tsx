@@ -44,6 +44,8 @@ export default function NobleFundedAuth() {
   }
 
   function handleSubmit() {
+    // Set mock session so the dashboard auth guard lets users through
+    sessionStorage.setItem("nf_logged_in", "true")
     router.push("/dashboard")
   }
 
